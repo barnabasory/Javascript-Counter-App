@@ -57,19 +57,48 @@
     <div class="btns">
       <button class="add">+</button>
       <button class="subtract">-</button>
+      <button class="add-two">+2</button>
+      <button class="subtract-two">-2</button>
+      <button class="add-five">+5</button>
+      <button class="subtract-five">-5</button>
     </div>
   </body>
 
   <script>
-    const result = document.querySelector(".result");
+    let number = document.querySelector(".result");
+    let result = parseInt(number.textContent);
     const addBtn = document.querySelector(".add");
     const subtractBtn = document.querySelector(".subtract");
+    const addBtnTwo = document.querySelector(".add-two");
+    const subtractBtnTwo = document.querySelector(".subtract-two");
+    const addBtnFive = document.querySelector(".add-five");
+    const subtractBtnFive = document.querySelector(".subtract-five");
+
+    console.log(result);
 
     addBtn.onclick = () => {
-      result.textContent++;
+      result++;
+      number.textContent = result;
     };
     subtractBtn.onclick = () => {
-      result.textContent--;
+      result--;
+      number.textContent = result;
+    };
+    addBtnTwo.onclick = () => {
+      result = result + 2;
+      number.textContent = result;
+    };
+    subtractBtnTwo.onclick = () => {
+      result = result - 2;
+      number.textContent = result;
+    };
+    addBtnFive.onclick = () => {
+      result = result + 5;
+      number.textContent = result;
+    };
+    subtractBtnFive.onclick = () => {
+      result = result - 5;
+      number.textContent = result;
     };
   </script>
 </html>
