@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      h1 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .slider {
+        width: 100%;
+        height: 60vh;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transform: translateX(-50%);
+        transition: all 0.5s ease;
+      }
+
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .current {
+        opacity: 1;
+        transform: translateX(0%);
+      }
+
+      .content {
+        position: absolute;
+        top: 7rem;
+        left: 5rem;
+        opacity: 0;
+        width: 55%;
+        color: aliceblue;
+        padding: 3rem;
+        transform: translateX(3rem);
+        text-shadow: 2px 2px 5px black;
+      }
+
+      .current .content {
+        opacity: 1;
+        transform: translateX(0rem);
+        transition: all 0.5s ease;
+      }
+
+      .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+        margin-top: -13rem;
+      }
+
+      .button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: red;
+        color: white;
+        width: 50px;
+        height: 50px;
+        font-size: 30px;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>IMAGE CAROUSEL</h1>
+      <div class="slider">
+        <div class="slide current">
+          <img src="./images/image1.jpeg" alt="" />
+          <div class="content">
+            <h1>HTML</h1>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum
+              accusamus eaque inventore maxime temporibus iusto molestias sint
+              amet non sequi! Necessitatibus,
+            </p>
+          </div>
+        </div>
+        <div class="slide">
+          <img src="./images/image2.jpeg" alt="" />
+          <div class="content">
+            <h1>CSS</h1>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum
+              accusamus eaque inventore maxime temporibus iusto molestias sint
+              amet non sequi! Necessitatibus,
+            </p>
+          </div>
+        </div>
+        <div class="slide">
+          <img src="./images/image3.jpeg" alt="" />
+          <div class="content">
+            <h1>JS</h1>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum
+              accusamus eaque inventore maxime temporibus iusto molestias sint
+              amet non sequi! Necessitatibus,
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button class="prev button">&lt;</button>
+        <button class="next button">&gt;</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    //get all the sides and put them inside a variable called slides
+    const slides = document.querySelectorAll(".slide");
+    const prev = document.querySelector(".prev"); //get the previous button
+    const next = document.querySelector(".next"); //get the next button
+
+    let autoScroll = true;
+    let interval;
+    let intervalTime = 5000;
+
+    function nextSlide() {
+      const currentElement = document.querySelector(".current"); // get the  element with the current class with the opacity of 1
+      currentElement.classList.remove("current"); // when you click the next button, remove the current class from the current image
+
+      if (currentElement.nextElementSibling) {
+        // if the current image with the current class has an element in front of it,remove the current class from the current image and add it to its nextSibling -- the element in front of it
+        currentElement.nextElementSibling.classList.add("current");
+        //if the current image with the current class does not have a nextSibling, go straight to the first element
+      } else {
+        slides[0].classList.add("current");
+      }
+    }
+
+    function previousSlide() {
+      const currentElement = document.querySelector(".current");
+      currentElement.classList.remove("current");
+
+      if (currentElement.previousElementSibling) {
+        currentElement.previousElementSibling.classList.add("current");
+      } else {
+        slides[slides.length - 1].classList.add("current");
+      }
+      if (autoScroll) {
+        clearInterval(interval);
+        interval = setInterval(nextSlide, intervalTime);
+      }
+    }
+
+    next.addEventListener("click", () => {
+      nextSlide();
+      if (autoScroll) {
+        clearInterval(interval);
+        interval = setInterval(nextSlide, intervalTime);
+      }
+    });
+
+    prev.addEventListener("click", () => {
+      previousSlide();
+      if (autoScroll) {
+        clearInterval(interval);
+        interval = setInterval(nextSlide, intervalTime);
+      }
+    });
+
+    if (autoScroll) {
+      interval = setInterval(nextSlide, intervalTime);
+    }
+
+    slides.addEventListener("onmouseover", () => {
+      clearInterval(interval);
+    });
+  </script>
+</html>
