@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doggo Quiz</title>
+
+    <style>
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .red {
+        background-color: red;
+      }
+      .green {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="main">
+      <h1>Guess the dog</h1>
+      <h3>What is the name of the dog?</h3>
+
+      <div class="buttons">
+        <button class="btn first_option"></button>
+        <button class="btn second_option"></button>
+        <button class="btn third_option"></button>
+      </div>
+    </main>
+  </body>
+  <script>
+    const main = document.querySelector(".main");
+    const optionButtons = document.querySelectorAll(".btn");
+    const questions = [
+      {
+        img: "https://images.dog.ceo/breeds/affenpinscher/n02110627_3409.jpg",
+        answer: "Affenpinscher",
+        otherOption1: "Appenzeller Sennenhund",
+        otherOption2: "Otterhound",
+      },
+    ];
+
+    const img = document.createElement("img");
+    img.src = questions[0].img;
+    main.append(img);
+
+    function disable(button) {
+      button.setAttribute("disabled", "");
+    }
+
+    for (const button of optionButtons) {
+      optionButtons[0].textContent = questions[0].answer;
+      optionButtons[1].textContent = questions[0].otherOption1;
+      optionButtons[2].textContent = questions[0].otherOption2;
+
+      button.addEventListener("click", () => {
+        if ((optionButtons[0].textContent = questions[0].answer)) {
+          button.classList.add("green");
+        } else {
+          button.classList.add("red");
+        }
+
+        for (const button of optionButtons) {
+          disable(button);
+        }
+      });
+    }
+  </script>
+</html>

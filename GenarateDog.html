@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background-color: rgb(68, 11, 11);
+        color: white;
+      }
+      .spinner {
+        font-size: 50px;
+
+        display: none;
+      }
+
+      .img {
+        display: none;
+        max-width: 400px;
+        max-height: 400px;
+      }
+      .show {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Generate a dog from a select-dropdown list</h1>
+    <div class="spinner"><h1>Loadingggggg</h1></div>
+    <img src="https://placedog.net/640/480?random" alt="" class="img show" />
+  </body>
+  <script>
+    let img = document.querySelector(".img");
+    let h1 = document.createElement("h1");
+    let select = document.createElement("select");
+
+    function fetchDog() {
+      fetch("https://dog.ceo/api/breeds/list/all")
+        .then((response) => response.json())
+        .then((data) => {
+          let dogs = Object.keys(data.message);
+
+          dogs.forEach((dog) => {
+            let option = document.createElement("option");
+            option.text = dog;
+            option.value = dog;
+            select.appendChild(option);
+          });
+        });
+    }
+    fetchDog();
+    const spinner = document.querySelector(".spinner");
+    function getDogImage() {
+      select.onchange = (event) => {
+        spinner.classList.add("show");
+        img.classList.remove("show");
+
+        fetch(`https://dog.ceo/api/breed/${event.target.value}/images/random`)
+          .then((response) => response.json())
+          .then((data) => {
+            img.src = data.message;
+
+            document.body.append(img);
+          });
+        isLoading = false;
+      };
+    }
+    getDogImage();
+
+    img.onload = () => {
+      spinner.classList.remove("show");
+      img.classList.add("show");
+    };
+
+    document.body.append(select, h1);
+  </script>
+</html>
